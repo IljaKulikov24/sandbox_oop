@@ -37,7 +37,7 @@ class IdentityFunctionTest {
     void testHashCode() {
         MathFunction identity = new IdentityFunction();
 
-        System.out.println(identity.hashCode());
+        assertEquals(23, identity.hashCode());
     }
 
     @Test

@@ -1,7 +1,5 @@
 package ru.ssau.tk._division_._lr3_.functions;
 
-import java.util.Random;
-
 public class  IdentityFunction implements MathFunction, Cloneable {
 
     @Override
@@ -21,8 +19,7 @@ public class  IdentityFunction implements MathFunction, Cloneable {
     
     @Override
     public int hashCode() {
-        Random RANDOM = new Random();
-        return RANDOM.nextInt();
+        return  23;
     }
 
     @Override
