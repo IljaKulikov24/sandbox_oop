@@ -168,12 +168,12 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
 
     @Override
     public String toString() {
-        StringBuilder onePoint = new StringBuilder();
+        StringBuilder result = new StringBuilder();
         for (int i = 0; i < count; ++i) {
-            onePoint.append('(').append(xValues[i]).append("; ")
+            result.append('(').append(xValues[i]).append("; ")
                     .append(yValues[i]).append(")\n");
         }
-        return onePoint.toString();
+        return result.toString();
     }
 
     @Override
