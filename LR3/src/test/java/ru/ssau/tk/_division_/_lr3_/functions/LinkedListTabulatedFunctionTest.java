@@ -150,4 +150,65 @@ class LinkedListTabulatedFunctionTest {
         assertEquals(3, function.getY(0));
         assertEquals(2, function.getCount());
     }
+
+    @Test
+    void testToString() {
+        double[] xArray = {1.0, 2.0, 3.0};
+        double[] yArray = {2.0, 3.0, 4.0};
+
+        LinkedListTabulatedFunction function = new LinkedListTabulatedFunction(xArray, yArray);
+        String points = "(1.0; 2.0)\n(2.0; 3.0)\n(3.0; 4.0)\n";
+        String result = function.toString();
+        assertEquals(points, result);
+    }
+
+    @Test
+    void testEquals() {
+        double[] xArray = { 1.0, 2.0, 3.0 };
+        double[] yArray = { 2.0, 3.0, 4.0 };
+        double[] array = { 1.0 };
+
+        LinkedListTabulatedFunction function1 = new LinkedListTabulatedFunction(xArray, yArray);
+        LinkedListTabulatedFunction function2 = new LinkedListTabulatedFunction(xArray, yArray);
+
+        assertTrue(function1.equals(function1));
+        assertFalse(function2.equals(array));
+    }
+
+    @Test
+    void testHashCode() {
+        double[] xArray = { 1.0, 2.0, 3.0 };
+        double[] yArray = { 2.0, 3.0, 4.0 };
+
+        LinkedListTabulatedFunction function1 = new LinkedListTabulatedFunction(xArray, yArray);
+        LinkedListTabulatedFunction function2 = new LinkedListTabulatedFunction(xArray, yArray);
+
+        assertEquals(function1.hashCode(), function2.hashCode());
+    }
+
+    @Test
+    void testClone() {
+        double[] xArray = { 1.0, 2.0, 3.0 };
+        double[] yArray = { 2.0, 3.0, 4.0 };
+
+        LinkedListTabulatedFunction function = new LinkedListTabulatedFunction(xArray, yArray);
+        LinkedListTabulatedFunction clone = (LinkedListTabulatedFunction) function.clone();
+
+        assertEquals(function.hashCode(), clone.hashCode());
+        assertTrue(function.equals(clone));
+        assertEquals(function.toString(), clone.toString());
+
+        function.setY(2, 1.0);
+
+        boolean flagHashCode = function.hashCode() == clone.hashCode();
+        boolean flagEquals = function.equals(clone);
+        boolean flagToString = function.toString().equals(clone.toString());
+
+        assertFalse(flagHashCode);
+        assertFalse(flagEquals);
+        assertFalse(flagToString);
+
+        System.out.println("function:\n" + function.toString());
+        System.out.println("clone:\n" + clone.toString());
+    }
 }
