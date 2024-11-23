@@ -2,6 +2,8 @@ package ru.ssau.tk._division_._lr4_.functions;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Iterator;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class LinkedListTabulatedFunctionTest {
@@ -210,5 +212,23 @@ class LinkedListTabulatedFunctionTest {
 
         System.out.println("function:\n" + function.toString());
         System.out.println("clone:\n" + clone.toString());
+    }
+
+    @Test
+    void iteratorTest() {
+        double[] xArray = { 1.0, 2.0, 3.0 };
+        double[] yArray = { 2.0, 3.0, 4.0 };
+
+        LinkedListTabulatedFunction function = new LinkedListTabulatedFunction(xArray, yArray);
+        Iterator<Point> iterator = function.iterator();
+
+        int index = 0;
+        while (iterator.hasNext() && index != function.count) {
+            Point point = iterator.next();
+            assertEquals(function.getX(index), point.x);
+            assertEquals(function.getY(index), point.y);
+            ++index;
+        }
+        assertEquals(function.getCount(), index);
     }
 }

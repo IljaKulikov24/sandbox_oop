@@ -1,5 +1,10 @@
 package ru.ssau.tk._division_._lr4_.functions;
 
+import ru.ssau.tk._division_._lr4_.exceptions.InterpolationException;
+
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 public class LinkedListTabulatedFunction extends AbstractTabulatedFunction implements Insertable, Removable {
 
     private Node head;
@@ -175,6 +180,8 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
     protected double interpolate(double x, int floorIndex) {
         Node leftNode = getNode(floorIndex);
         Node rightNode = leftNode.next;
+        if (x < leftNode.x || x > rightNode.x)
+            throw new InterpolationException("Абсцисса вне интервала интерполирования");
         return interpolate(x, leftNode.x, rightNode.x, leftNode.y, rightNode.y);
     }
 
@@ -289,5 +296,25 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
             ++index;
         } while (current != head);
         return new LinkedListTabulatedFunction(xArray, yArray);
+    }
+
+    @Override
+    public Iterator<Point> iterator() {
+        return new Iterator<Point>() {
+            private Node currentNode = head;
+
+            @Override
+            public boolean hasNext() {
+                return currentNode != null;
+            }
+
+            @Override
+            public Point next() {
+                if (!hasNext()) throw new NoSuchElementException();
+                Point point = new Point(currentNode.x, currentNode.y);
+                currentNode = currentNode.next;
+                return point;
+            }
+        };
     }
 }

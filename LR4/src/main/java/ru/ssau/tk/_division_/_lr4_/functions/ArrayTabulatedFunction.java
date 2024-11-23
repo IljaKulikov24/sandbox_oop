@@ -1,6 +1,10 @@
 package ru.ssau.tk._division_._lr4_.functions;
 
+import ru.ssau.tk._division_._lr4_.exceptions.InterpolationException;
+
 import java.util.Arrays;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements Insertable, Removable {
 
@@ -115,6 +119,8 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
 
     @Override
     protected double interpolate(double x, int floorIndex) {
+        if (x < getX(floorIndex) || x > getX(floorIndex + 1))
+            throw new InterpolationException("Абсцисса вне интервала интерполирования");
         return interpolate(x, xValues[floorIndex], xValues[floorIndex + 1], yValues[floorIndex], yValues[floorIndex + 1]);
     }
 
@@ -207,5 +213,25 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
         double[] xArray = Arrays.copyOf(this.xValues, count);
         double[] yArray = Arrays.copyOf(this.yValues, count);
         return new ArrayTabulatedFunction(xArray, yArray);
+    }
+
+    @Override
+    public Iterator<Point> iterator() {
+        return new Iterator<Point>() {
+            private int currentIndex = 0;
+
+            @Override
+            public boolean hasNext() {
+                return currentIndex != count;
+            }
+
+            @Override
+            public Point next() {
+                if (!hasNext()) throw new NoSuchElementException();
+                Point point = new Point(xValues[currentIndex], yValues[currentIndex]);
+                ++currentIndex;
+                return point;
+            }
+        };
     }
 }

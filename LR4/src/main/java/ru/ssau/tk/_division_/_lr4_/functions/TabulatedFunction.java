@@ -1,6 +1,8 @@
 package ru.ssau.tk._division_._lr4_.functions;
 
-public interface TabulatedFunction extends MathFunction {
+import java.util.Iterator;
+
+public interface TabulatedFunction extends MathFunction, Iterable<Point> {
 
     int getCount();
 
@@ -17,4 +19,6 @@ public interface TabulatedFunction extends MathFunction {
     double leftBound();
 
     double rightBound();
+
+    Iterator<Point> iterator();
 }
