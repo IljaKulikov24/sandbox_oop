@@ -121,6 +121,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
 
     @Override
     public void setY(int index, double value) {
+        if (index < 0 || index >= count) throw new IllegalArgumentException("Вызван несуществующий индекс");
         getNode(index).y = value;
     }
 
