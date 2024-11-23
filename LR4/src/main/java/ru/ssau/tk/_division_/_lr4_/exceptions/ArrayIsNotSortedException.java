@@ -1,4 +1,12 @@
 package ru.ssau.tk._division_._lr4_.exceptions;
 
-public class ArrayIsNotSortedException {
+public class ArrayIsNotSortedException extends RuntimeException {
+
+    public ArrayIsNotSortedException() {
+        super();
+    }
+
+    public ArrayIsNotSortedException(String message) {
+        super(message);
+    }
 }

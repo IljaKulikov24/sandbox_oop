@@ -1,5 +1,8 @@
 package ru.ssau.tk._division_._lr4_.functions;
 
+import ru.ssau.tk._division_._lr4_.exceptions.ArrayIsNotSortedException;
+import ru.ssau.tk._division_._lr4_.exceptions.DifferentLengthOfArraysException;
+
 //Абстрактный класс для табулированных функций.
 public abstract class AbstractTabulatedFunction implements TabulatedFunction {
 
@@ -30,6 +33,20 @@ public abstract class AbstractTabulatedFunction implements TabulatedFunction {
             } else {
                 int floorIndex = floorIndexOfX(x);
                 return interpolate(x, floorIndex);
+            }
+        }
+    }
+
+    static void checkLengthIsTheSame(double[] xValues, double[] yValues) {
+        if (xValues.length != yValues.length)
+            throw new DifferentLengthOfArraysException("Количество значений абсцисс и ординат не совпадают");
+    }
+
+    static void checkSorted(double[] xValues) {
+        int index = 0;
+        while (index < xValues.length - 1) {
+            if (xValues[index] > xValues[index++ + 1]) {
+                throw new ArrayIsNotSortedException("Абсциссы неупорядоченны");
             }
         }
     }

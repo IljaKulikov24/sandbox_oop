@@ -9,6 +9,8 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
 
     //Первый конструктор
     public ArrayTabulatedFunction(double[] xValues, double[] yValues) {
+        checkLengthIsTheSame(xValues, yValues);
+        checkSorted(xValues);
         if (xValues.length < 2) throw new IllegalArgumentException("Количество точек должно быть не меньше двух");
         this.xValues = Arrays.copyOf(xValues, xValues.length);
         this.yValues = Arrays.copyOf(yValues, yValues.length);

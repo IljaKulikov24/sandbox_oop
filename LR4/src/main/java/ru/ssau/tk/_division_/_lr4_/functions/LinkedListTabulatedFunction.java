@@ -5,6 +5,8 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
     private Node head;
 
     public LinkedListTabulatedFunction(double[] xValues, double[] yValues) {
+        checkLengthIsTheSame(xValues, yValues);
+        checkSorted(xValues);
         if (xValues.length < 2) throw new IllegalArgumentException("Количество точек должно быть не меньше двух");
         for (int i = 0; i < xValues.length; i++) {
             addNode(xValues[i], yValues[i]);
