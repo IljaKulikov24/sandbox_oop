@@ -4,16 +4,47 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class CosFunctionTest {
+class IdentityFunctionTest {
 
     @Test
-    void apply() {
+    void testApply() {
+        MathFunction identity = new IdentityFunction();
 
-        MathFunction cos = new CosFunction();
+        assertEquals(0.0, identity.apply(0.0), 1e-9);
+        assertEquals(5.0, identity.apply(5.0), 1e-9);
+        assertEquals(-3.14, identity.apply(-3.14), 1e-9);
+    }
 
-        assertEquals(1.0, cos.apply(0.0), 1e-9);
-        assertEquals(0.0, cos.apply(Math.PI / 2), 1e-9);
-        assertEquals(-1.0, cos.apply(Math.PI), 1e-9);
-        assertEquals(0.0, cos.apply(3 * Math.PI / 2), 1e-9);
+    @Test
+    void testToString() {
+        MathFunction identity = new IdentityFunction();
+        assertEquals("(IdentityFunction) Объекты этого класса выполняют тождественное преобразование", identity.toString());
+    }
+
+    @Test
+    void testEquals() {
+        MathFunction identity1 = new IdentityFunction();
+        MathFunction identity2 = new IdentityFunction();
+        MathFunction function = new SqrFunction();
+
+        assertTrue(identity1.equals(identity2));
+        assertTrue(identity1.equals(identity1));
+        assertFalse(identity1.equals(function));
+        assertFalse(identity1.equals(null));
+    }
+
+    @Test
+    void testHashCode() {
+        MathFunction identity = new IdentityFunction();
+
+        assertEquals(23, identity.hashCode());
+    }
+
+    @Test
+    void testClone() {
+        IdentityFunction original = new IdentityFunction();
+        IdentityFunction cloned = original.clone();
+
+        assertEquals(original, cloned);
     }
 }

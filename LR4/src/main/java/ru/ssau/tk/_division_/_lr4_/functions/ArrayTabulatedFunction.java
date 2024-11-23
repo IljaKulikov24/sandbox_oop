@@ -9,6 +9,7 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
 
     //Первый конструктор
     public ArrayTabulatedFunction(double[] xValues, double[] yValues) {
+        if (xValues.length < 2) throw new IllegalArgumentException("Количество точек должно быть не меньше двух");
         this.xValues = Arrays.copyOf(xValues, xValues.length);
         this.yValues = Arrays.copyOf(yValues, yValues.length);
         count = xValues.length;
@@ -16,6 +17,8 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
 
     //Второй конструктор
     public ArrayTabulatedFunction(MathFunction source, double xFrom, double xTo, int count) {
+        if (count < 2) throw new IllegalArgumentException("Количество точек должно быть не меньше двух");
+
         if (xFrom > xTo) {
             double temp = xFrom;
             xFrom = xTo;
@@ -41,16 +44,19 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
 
     @Override
     public double getX(int index) {
+        if (index < 0 || index >= count) throw new IllegalArgumentException("Вызван несуществующий индекс");
         return xValues[index];
     }
 
     @Override
     public double getY(int index) {
+        if (index < 0 || index >= count) throw new IllegalArgumentException("Вызван несуществующий индекс");
         return yValues[index];
     }
 
     @Override
     public void setY(int index, double value) {
+        if (index < 0 || index >= count) throw new IllegalArgumentException("Вызван несуществующий индекс");
         yValues[index] = value;
     }
 
@@ -82,8 +88,8 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
 
     @Override
     protected int floorIndexOfX(double x) {
+        if (x < xValues[0]) throw new IllegalArgumentException("Значение аргумента меньше левой границы");
         if (indexOfX(x) != -1) return indexOfX(x);
-        if (x < xValues[0]) return 0;
         if (x > xValues[count - 1]) return count;
         int index = 0;
         for (int i = 1; i < count; ++i) {
@@ -97,19 +103,16 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
 
     @Override
     protected double extrapolateLeft(double x) {
-        if (count == 1) return getY(0);
         return interpolate(x, 0);
     }
 
     @Override
     protected double extrapolateRight(double x) {
-        if (count == 1) return getY(0);
         return interpolate(x, count - 2);
     }
 
     @Override
     protected double interpolate(double x, int floorIndex) {
-        if (count == 1) return getY(0);
         return interpolate(x, xValues[floorIndex], xValues[floorIndex + 1], yValues[floorIndex], yValues[floorIndex + 1]);
     }
 
@@ -149,6 +152,8 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
 
     @Override
     public void remove(int index) {
+        if (index < 0 || index >= count) throw new IllegalArgumentException("Вызван несуществующий индекс");
+
         double[] newXValues = new double[count - 1];
         double[] newYValues = new double[count - 1];
 

@@ -4,6 +4,28 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
 
     private Node head;
 
+    public LinkedListTabulatedFunction(double[] xValues, double[] yValues) {
+        if (xValues.length < 2) throw new IllegalArgumentException("Количество точек должно быть не меньше двух");
+        for (int i = 0; i < xValues.length; i++) {
+            addNode(xValues[i], yValues[i]);
+        }
+    }
+
+    public LinkedListTabulatedFunction(MathFunction source, double xFrom, double xTo, int count) {
+        if (count < 2) throw new IllegalArgumentException("Количество точек должно быть не меньше двух");
+        if (xFrom > xTo) {
+            double temp = xFrom;
+            xFrom = xTo;
+            xTo = temp;
+        }
+        double step = (xTo - xFrom) / (count - 1);
+        for (int i = 0; i < count; i++) {
+            double x = xFrom + step * i;
+            double y = source.apply(x);
+            addNode(x, y);
+        }
+    }
+
     private static class Node {
         public Node next;
         public Node prev;
@@ -55,26 +77,6 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
         count++;
     }
 
-    public LinkedListTabulatedFunction(double[] xValues, double[] yValues) {
-        for (int i = 0; i < xValues.length; i++) {
-            addNode(xValues[i], yValues[i]);
-        }
-    }
-
-    public LinkedListTabulatedFunction(MathFunction source, double xFrom, double xTo, int count) {
-        if (xFrom > xTo) {
-            double temp = xFrom;
-            xFrom = xTo;
-            xTo = temp;
-        }
-        double step = (xTo - xFrom) / (count - 1);
-        for (int i = 0; i < count; i++) {
-            double x = xFrom + step * i;
-            double y = source.apply(x);
-            addNode(x, y);
-        }
-    }
-
     @Override
     public int getCount() {
         return count;
@@ -91,6 +93,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
     }
 
     private Node getNode(int index) {
+        if (index < 0 || index >= count) throw new IllegalArgumentException("Вызван несуществующий индекс");
         Node currentNode = head;
         if (index < count / 2) {
             for (int i = 0; i < index; ++i) {
@@ -106,11 +109,13 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
 
     @Override
     public double getX(int index) {
+        if (index < 0 || index >= count) throw new IllegalArgumentException("Вызван несуществующий индекс");
         return getNode(index).x;
     }
 
     @Override
     public double getY(int index) {
+        if (index < 0 || index >= count) throw new IllegalArgumentException("Вызван несуществующий индекс");
         return getNode(index).y;
     }
 
@@ -141,8 +146,8 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
 
     @Override
     protected int floorIndexOfX(double x) {
+        if (x < head.x) throw new IllegalArgumentException("Значение аргумента меньше левой границы");
         if (indexOfX(x) != -1) return indexOfX(x);
-        if (x < head.x) return 0;
         if (x > head.prev.x) return count;
         Node currentNode = head;
         int index = 0;
@@ -155,19 +160,16 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
 
     @Override
     protected double extrapolateLeft(double x) {
-        if (count == 1) return getY(0);
         return interpolate(x, 0);
     }
 
     @Override
     protected double extrapolateRight(double x) {
-        if (count == 1) return getY(0);
         return interpolate(x, count - 2);
     }
 
     @Override
     protected double interpolate(double x, int floorIndex) {
-        if (count == 1) return getY(0);
         Node leftNode = getNode(floorIndex);
         Node rightNode = leftNode.next;
         return interpolate(x, leftNode.x, rightNode.x, leftNode.y, rightNode.y);
@@ -217,6 +219,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
 
     @Override
     public void remove(int index) {
+        if (index < 0 || index >= count) throw new IllegalArgumentException("Вызван несуществующий индекс");
         Node deletedNode = getNode(index);
         if (deletedNode == head && getCount() > 1) {
             this.head = deletedNode.next;
