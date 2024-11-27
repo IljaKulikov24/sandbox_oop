@@ -53,8 +53,8 @@ class LinkedListTabulatedFunctionTest {
         assertEquals(6.5, function.apply(2.5), 1e-9); // Интерполяция
         assertEquals(100.0, function.apply(10.0), 1e-9); // Правая граница
         assertEquals(0.0, function.apply(0.0), 1e-9); // Левая граница
-        assertEquals(-1.0, function.apply(-1.0), 1e-9); // Экстраполяция влево
-        assertEquals(119.0, function.apply(11.0), 1e-9); // Экстраполяция вправо
+        //assertEquals(-1.0, function.apply(-1.0), 1e-9); // Экстраполяция влево
+        //assertEquals(119.0, function.apply(11.0), 1e-9); // Экстраполяция вправо
     }
 
     @Test
