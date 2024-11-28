@@ -68,5 +68,37 @@ class TabulatedFunctionOperationServiceTest {
             assertEquals(-1, result.getY(1));
             assertEquals(-1, result.getY(2));
         }
+        {
+            double[] xArray = { 1.0, 2.0, 3.0 };
+
+            double[] yArrayA = { 2.0, 3.0, 4.0 };
+            ArrayTabulatedFunction functionA = new ArrayTabulatedFunction(xArray, yArrayA);
+            double[] yArrayB = { 3.0, 4.0, 5.0 };
+            ArrayTabulatedFunction functionB = new ArrayTabulatedFunction(xArray, yArrayB);
+
+            ArrayTabulatedFunctionFactory factory = new ArrayTabulatedFunctionFactory();
+            TabulatedFunctionOperationService service = new TabulatedFunctionOperationService(factory);
+
+            TabulatedFunction result = service.multiplication(functionA, functionB);
+            assertEquals(6, result.getY(0));
+            assertEquals(12, result.getY(1));
+            assertEquals(20, result.getY(2));
+        }
+        {
+            double[] xArray = { 1.0, 2.0, 3.0 };
+
+            double[] yArrayA = { 3.0, 4.0, 5.0 };
+            ArrayTabulatedFunction functionA = new ArrayTabulatedFunction(xArray, yArrayA);
+            double[] yArrayB = { 2.0, 3.0, 4.0 };
+            LinkedListTabulatedFunction functionB = new LinkedListTabulatedFunction(xArray, yArrayB);
+
+            ArrayTabulatedFunctionFactory factory = new ArrayTabulatedFunctionFactory();
+            TabulatedFunctionOperationService service = new TabulatedFunctionOperationService(factory);
+
+            TabulatedFunction result = service.division(functionA, functionB);
+            assertEquals(1.5, result.getY(0));
+            assertEquals(1.33, result.getY(1), 1e-1);
+            assertEquals(1.25, result.getY(2));
+        }
     }
 }
