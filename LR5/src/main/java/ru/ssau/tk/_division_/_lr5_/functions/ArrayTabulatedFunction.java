@@ -179,6 +179,7 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
         this.yValues = newYValues;
     }
 
+    /*Наследуется от AbstractTabulatedFunction
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
@@ -187,7 +188,7 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
                     .append(yValues[i]).append(")\n");
         }
         return result.toString();
-    }
+    }*/
 
     @Override
     public boolean equals(Object o) {

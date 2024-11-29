@@ -241,6 +241,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
         --count;
     }
 
+    /*Наследуется от AbstractTabulatedFunction
     @Override
     public String toString() {
         Node current = head;
@@ -251,7 +252,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
             current = current.next;
         } while (current != head);
         return result.toString();
-    }
+    }*/
 
     @Override
     public boolean equals(Object o) {
