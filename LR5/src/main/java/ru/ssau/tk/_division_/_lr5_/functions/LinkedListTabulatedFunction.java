@@ -2,10 +2,15 @@ package ru.ssau.tk._division_._lr5_.functions;
 
 import ru.ssau.tk._division_._lr5_.exceptions.InterpolationException;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class LinkedListTabulatedFunction extends AbstractTabulatedFunction implements Insertable, Removable {
+public class LinkedListTabulatedFunction extends AbstractTabulatedFunction implements Insertable, Removable, Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 7370553474914531176L;
 
     private Node head;
 

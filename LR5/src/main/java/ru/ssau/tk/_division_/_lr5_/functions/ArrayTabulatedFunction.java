@@ -2,11 +2,16 @@ package ru.ssau.tk._division_._lr5_.functions;
 
 import ru.ssau.tk._division_._lr5_.exceptions.InterpolationException;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements Insertable, Removable {
+public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements Insertable, Removable, Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 5299736339661586895L;
 
     private double[] xValues;
     private double[] yValues;
