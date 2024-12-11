@@ -3,9 +3,14 @@ package ru.ssau.tk._division_._lr5_.functions;
 import ru.ssau.tk._division_._lr5_.exceptions.ArrayIsNotSortedException;
 import ru.ssau.tk._division_._lr5_.exceptions.DifferentLengthOfArraysException;
 
-//Абстрактный класс для табулированных функций.
-public abstract class AbstractTabulatedFunction implements TabulatedFunction {
+import java.io.Serial;
+import java.io.Serializable;
 
+//Абстрактный класс для табулированных функций.
+public abstract class AbstractTabulatedFunction implements TabulatedFunction, Serializable {
+
+    @Serial
+    private static final long serialVersionUID = -4525986017550887710L;
     protected int count;
 
     protected abstract int floorIndexOfX(double x);
